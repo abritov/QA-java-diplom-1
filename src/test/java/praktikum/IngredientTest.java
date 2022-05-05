@@ -1,5 +1,7 @@
-package praktikum;
+package org.example.praktikum;
 
+import org.example.praktikum.Ingredient;
+import org.example.praktikum.IngredientType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

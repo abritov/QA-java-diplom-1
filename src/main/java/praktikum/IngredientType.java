@@ -1,4 +1,4 @@
-package praktikum;
+package org.example.praktikum;
 
 /**
  * Перечисление с типами ингредиентов.
