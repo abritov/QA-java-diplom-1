@@ -1,9 +1,5 @@
-package org.example.praktikum;
+package praktikum;
 
-import org.example.praktikum.Bun;
-import org.example.praktikum.Burger;
-import org.example.praktikum.Ingredient;
-import org.example.praktikum.IngredientType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
