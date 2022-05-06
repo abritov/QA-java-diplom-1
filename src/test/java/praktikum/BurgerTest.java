@@ -1,6 +1,9 @@
 package praktikum;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -109,42 +112,51 @@ public class BurgerTest {
 
     @Test
     void testGetReceipt() {
-        Burger burger = new Burger();
+        // MOCK
+        Burger burger = Mockito.spy(new Burger());
 
         assertThrows(
                 NullPointerException.class,
                 burger::getReceipt,
                 "burger.getReceipt on empty burger"
         );
+        Mockito.verify(burger, Mockito.times(1)).getReceipt();
 
-        Bun bun = new Bun("foo", 10.0f);
+        Bun bun = Mockito.spy(new Bun("foo", 10.0f));
+        // STUB
+        Mockito.when(bun.getName()).thenReturn("bar");
         burger.setBuns(bun);
 
         assertEquals("" +
-                "(==== foo ====)\n" +
-                "(==== foo ====)\n\n" +
+                "(==== bar ====)\n" +
+                "(==== bar ====)\n\n" +
                 "Price: 20.000000\n", burger.getReceipt()
         );
 
-        Ingredient filling = new Ingredient(IngredientType.FILLING, "foo", 10.0f);
+        Ingredient filling = Mockito.spy(new Ingredient(IngredientType.FILLING, "foo", 10.0f));
         burger.addIngredient(filling);
 
         assertEquals("" +
-                "(==== foo ====)\n" +
+                "(==== bar ====)\n" +
                 "= filling foo =\n" +
-                "(==== foo ====)\n\n" +
+                "(==== bar ====)\n\n" +
                 "Price: 30.000000\n", burger.getReceipt()
         );
+        Mockito.verify(filling, Mockito.times(1)).getType();
+        Mockito.verify(filling, Mockito.times(1)).getName();
 
-        Ingredient sauce = new Ingredient(IngredientType.SAUCE, "bar", 3.0f);
+        Ingredient sauce = Mockito.spy(new Ingredient(IngredientType.SAUCE, "bar", 3.0f));
         burger.addIngredient(sauce);
 
         assertEquals("" +
-                "(==== foo ====)\n" +
+                "(==== bar ====)\n" +
                 "= filling foo =\n" +
                 "= sauce bar =\n" +
-                "(==== foo ====)\n\n" +
+                "(==== bar ====)\n\n" +
                 "Price: 33.000000\n", burger.getReceipt()
         );
+
+        Mockito.verify(sauce, Mockito.times(1)).getType();
+        Mockito.verify(sauce, Mockito.times(1)).getName();
     }
 }
