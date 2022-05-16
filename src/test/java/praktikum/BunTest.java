@@ -20,11 +20,17 @@ public class BunTest {
 
     @ParameterizedTest
     @MethodSource("testCases")
-    void testConstructor(String name, float price) {
+    void testConstructorName(String name, float price) {
         Bun bun = new Bun(name, price);
 
         assertEquals(name, bun.name);
         assertEquals(name, bun.getName());
+    }
+
+    @ParameterizedTest
+    @MethodSource("testCases")
+    void testConstructorPrice(String name, float price) {
+        Bun bun = new Bun(name, price);
 
         assertEquals(price, bun.price);
         assertEquals(price, bun.getPrice());

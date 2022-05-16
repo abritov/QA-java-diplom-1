@@ -13,7 +13,7 @@ public class BurgerTest {
     void testConstructor() {
         Burger burger = new Burger();
         assertNull(burger.bun);
-        assertNotNull(burger.ingredients);
+        assertEquals(0, burger.ingredients.size());
 
         Bun bun = new Bun("foo", 10.0f);
         burger.setBuns(bun);
@@ -25,8 +25,6 @@ public class BurgerTest {
         Burger burger = new Burger();
         Bun bun = new Bun("foo", 10.0f);
         burger.setBuns(bun);
-
-        assertEquals(0, burger.ingredients.size());
 
         Ingredient filling = new Ingredient(IngredientType.FILLING, "foo", 10.0f);
         burger.addIngredient(filling);
@@ -42,7 +40,7 @@ public class BurgerTest {
     }
 
     @Test
-    void testRemoveIngredient() {
+    void testRemoveIngredient_shouldThrowWhenNoIngredients() {
         Burger burger = new Burger();
         Bun bun = new Bun("foo", 10.0f);
         burger.setBuns(bun);
@@ -52,6 +50,13 @@ public class BurgerTest {
                 () -> burger.removeIngredient(0),
                 "burger.removeIngredient on empty burger"
         );
+    }
+
+    @Test
+    void testRemoveIngredient() {
+        Burger burger = new Burger();
+        Bun bun = new Bun("foo", 10.0f);
+        burger.setBuns(bun);
 
         Ingredient filling = new Ingredient(IngredientType.FILLING, "foo", 10.0f);
         burger.addIngredient(filling);
@@ -61,7 +66,7 @@ public class BurgerTest {
     }
 
     @Test
-    void testMoveIngredient() {
+    void testMoveIngredient_shouldThrowWhenNoIngredients() {
         Burger burger = new Burger();
         Bun bun = new Bun("foo", 10.0f);
         burger.setBuns(bun);
@@ -71,6 +76,13 @@ public class BurgerTest {
                 () -> burger.moveIngredient(0, 1),
                 "burger.moveIngredient on empty burger"
         );
+    }
+
+    @Test
+    void testMoveIngredient() {
+        Burger burger = new Burger();
+        Bun bun = new Bun("foo", 10.0f);
+        burger.setBuns(bun);
 
         Ingredient filling = new Ingredient(IngredientType.FILLING, "foo", 10.0f);
         burger.addIngredient(filling);
@@ -87,7 +99,7 @@ public class BurgerTest {
     }
 
     @Test
-    void testGetPrice() {
+    void testGetPrice_shouldThrowWhenNoBunSet() {
         Burger burger = new Burger();
 
         assertThrows(
@@ -95,23 +107,41 @@ public class BurgerTest {
                 burger::getPrice,
                 "burger.getPrice on empty burger"
         );
+    }
 
+    @Test
+    void testGetPrice() {
+        Burger burger = new Burger();
         Bun bun = new Bun("foo", 10.0f);
         burger.setBuns(bun);
 
         assertEquals(bun.getPrice() * 2, burger.getPrice());
+    }
+
+    @Test
+    void testGetPriceFilling() {
+        Burger burger = new Burger();
+        Bun bun = new Bun("foo", 10.0f);
+        burger.setBuns(bun);
 
         Ingredient filling = new Ingredient(IngredientType.FILLING, "foo", 10.0f);
         burger.addIngredient(filling);
         assertEquals(bun.getPrice() * 2 + filling.getPrice(), burger.getPrice());
-
-        Ingredient sauce = new Ingredient(IngredientType.SAUCE, "bar", 3.0f);
-        burger.addIngredient(sauce);
-        assertEquals(bun.getPrice() * 2 + filling.getPrice() + sauce.getPrice(), burger.getPrice());
     }
 
     @Test
-    void testGetReceipt() {
+    void testGetPriceSauce() {
+        Burger burger = new Burger();
+        Bun bun = new Bun("foo", 10.0f);
+        burger.setBuns(bun);
+
+        Ingredient sauce = new Ingredient(IngredientType.SAUCE, "bar", 3.0f);
+        burger.addIngredient(sauce);
+        assertEquals(bun.getPrice() * 2 + sauce.getPrice(), burger.getPrice());
+    }
+
+    @Test
+    void testGetReceipt_shouldThrowWhenNoBunSet() {
         // MOCK
         Burger burger = Mockito.spy(new Burger());
 
@@ -120,7 +150,12 @@ public class BurgerTest {
                 burger::getReceipt,
                 "burger.getReceipt on empty burger"
         );
-        Mockito.verify(burger, Mockito.times(1)).getReceipt();
+    }
+
+    @Test
+    void testGetReceipt() {
+        // MOCK
+        Burger burger = Mockito.spy(new Burger());
 
         Bun bun = Mockito.spy(new Bun("foo", 10.0f));
         // STUB
@@ -158,5 +193,7 @@ public class BurgerTest {
 
         Mockito.verify(sauce, Mockito.times(1)).getType();
         Mockito.verify(sauce, Mockito.times(1)).getName();
+
+        Mockito.verify(bun, Mockito.times(6)).getName();
     }
 }

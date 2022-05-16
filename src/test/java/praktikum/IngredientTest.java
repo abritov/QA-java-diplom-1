@@ -7,16 +7,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class IngredientTest {
 
     @Test
-    void testSauceConstructor() {
+    void testSauceConstructorType() {
         final String name = "foo";
         final float price = 10.0f;
         Ingredient ingredient = new Ingredient(IngredientType.SAUCE, name, price);
 
         assertEquals(IngredientType.SAUCE, ingredient.type);
         assertEquals(IngredientType.SAUCE, ingredient.getType());
+    }
+
+    @Test
+    void testSauceConstructorName() {
+        final String name = "foo";
+        final float price = 10.0f;
+        Ingredient ingredient = new Ingredient(IngredientType.SAUCE, name, price);
 
         assertEquals(name, ingredient.name);
         assertEquals(name, ingredient.getName());
+    }
+
+    @Test
+    void testSauceConstructorPrice() {
+        final String name = "foo";
+        final float price = 10.0f;
+        Ingredient ingredient = new Ingredient(IngredientType.SAUCE, name, price);
 
         assertEquals(price, ingredient.price);
         assertEquals(price, ingredient.getPrice());
