@@ -1,13 +1,14 @@
 package praktikum;
 
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 public class DatabaseTest {
 
     @Test
-    void testConstructor() {
+    public void testConstructor() {
         Database db = new Database();
 
         assertTrue(db.availableBuns().size() > 0);

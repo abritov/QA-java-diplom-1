@@ -1,38 +1,46 @@
 package praktikum;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.Collection;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
+@RunWith(Parameterized.class)
 public class BunTest {
+    private final String name;
+    private final float price;
 
-    private static Stream<Arguments> testCases() {
-        return Stream.of(
-                Arguments.of("foo", 10.0f),
-                Arguments.of("bar", 100.0f),
-                Arguments.of("baz", 33.0f)
-        );
+    public BunTest(String name, float price) {
+        this.name = name;
+        this.price = price;
     }
 
-    @ParameterizedTest
-    @MethodSource("testCases")
-    void testConstructorName(String name, float price) {
+    @Parameterized.Parameters
+    public static Collection<Object> testCases() {
+        return Arrays.asList(new Object[][]{
+                {"foo", 10.0f},
+                {"bar", 100.0f},
+                {"baz", 33.0f}
+        });
+    }
+
+    @Test
+    public void testConstructorName() {
         Bun bun = new Bun(name, price);
 
         assertEquals(name, bun.name);
         assertEquals(name, bun.getName());
     }
 
-    @ParameterizedTest
-    @MethodSource("testCases")
-    void testConstructorPrice(String name, float price) {
+    @Test
+    public void testConstructorPrice() {
         Bun bun = new Bun(name, price);
 
-        assertEquals(price, bun.price);
-        assertEquals(price, bun.getPrice());
+        assertEquals(price, bun.price, 0.001f);
+        assertEquals(price, bun.getPrice(), 0.001f);
     }
 }

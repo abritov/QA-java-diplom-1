@@ -1,13 +1,14 @@
 package praktikum;
 
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class IngredientTest {
 
     @Test
-    void testSauceConstructorType() {
+    public void testSauceConstructorType() {
         final String name = "foo";
         final float price = 10.0f;
         Ingredient ingredient = new Ingredient(IngredientType.SAUCE, name, price);
@@ -17,7 +18,7 @@ public class IngredientTest {
     }
 
     @Test
-    void testSauceConstructorName() {
+    public void testSauceConstructorName() {
         final String name = "foo";
         final float price = 10.0f;
         Ingredient ingredient = new Ingredient(IngredientType.SAUCE, name, price);
@@ -27,17 +28,17 @@ public class IngredientTest {
     }
 
     @Test
-    void testSauceConstructorPrice() {
+    public void testSauceConstructorPrice() {
         final String name = "foo";
         final float price = 10.0f;
         Ingredient ingredient = new Ingredient(IngredientType.SAUCE, name, price);
 
-        assertEquals(price, ingredient.price);
-        assertEquals(price, ingredient.getPrice());
+        assertEquals(price, ingredient.price, 0.001f);
+        assertEquals(price, ingredient.getPrice(), 0.001f);
     }
 
     @Test
-    void testFillingConstructor() {
+    public void testFillingConstructor() {
         Ingredient ingredient = new Ingredient(IngredientType.FILLING, "foo", 10.0f);
 
         assertEquals(IngredientType.FILLING, ingredient.type);
